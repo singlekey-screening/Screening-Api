@@ -109,7 +109,14 @@ Response:
 &nbsp;&nbsp;``"landlord_has_tenant_info": Boolean,``  
 &nbsp;&nbsp;``"report_url": String``  
 ``}``
-
+  
+# Re-running a report / Persisting a tenant's information for multiple landlords  
+You can identify your tenants to us by including an external_tenant_id in your request. This is a unique id created by you that you can use to identify a particular tenant.  
+  
+This is useful when there is the possibility that you have data on one tenant who will be applying to multiple landlords(users) within your system. In this case, after one of your landlord(user) screens a tenant, the recent credit data we have on the tenant will be returned to any of your other landlords(users) who screen that tenant for up to thirty days after the last screening. This prevents you from being charged multiple times for running a credit report on a tenant who's information we have recently run. After 30 days, we consider that report no longer valid, as the tenants credit history may have changed.  
+  
+If you would like to rerun a tenant's information with updated data within the thirty day window you can pass the value {"update": true} as part of your request. We will run a new credit check with the updated information. This is useful when your initial request contained incorrect information that led to a bad result on the initial report. This will generate a new purchase token, and you will still be able to access the 
+  
 # Payments
 You can tie a payment to your account using the by sending your credit card information to **/api/payments**  
 

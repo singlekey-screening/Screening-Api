@@ -114,7 +114,7 @@
 
   "additional_info": "I am a neat freak who keeps all of my spaces very clean.", //string - maximum 330 characters - any additional information that the tenant would like to provide about their application
 
-  "purchase_address": "12 York st, Toronot, ON, Canada, M5J 0A1", //string - !format! "street address, city, province two letter abbreviation, country" !This is important!. We use google address search to format all addresses for our automated application process.
+  "purchase_address": "12 York st, Toronto, ON, Canada, M5J 0A1", //string - !format! "street address, city, province two letter abbreviation, country" !This is important!. We use google address search to format all addresses for our automated application process.
 
   "purchase_unit": "2215", //string - unit number or id at the purchase address
 
@@ -130,6 +130,7 @@
 
   "promo_code": "SpringSale", //- string - promo codes can be obtained from viler@singlekey.com, and can be included if you would like to offer some clients a different price than others
 
-  "run_now": true //- boolean - if true, and if request includes all required fields ["ll_first_name", "ll_last_name", "ll_email", "ten_first_name", "ten_last_name", "ten_email", "ten_tel", "ten_address", "ten_dob_year", "ten_dob_month", "ten_dob_day"], it will process the report immediately, with out requiring a landlord to navigate to a form to collect additional information. For requests where the "ten_address" is a US address, "ten_sin" is also a required field.
+  "run_now": true // - boolean - if true, and if request includes all required fields ["ll_first_name", "ll_last_name", "ll_email", "ten_first_name", "ten_last_name", "ten_email", "ten_tel", "ten_address", "ten_dob_year", "ten_dob_month", "ten_dob_day"], it will process the report immediately, with out requiring a landlord to navigate to a form to collect additional information. For requests where the "ten_address" is a US address, "ten_sin" is also a required field.
 
+  "update": true // - boolean - used to update an existing request with new data. If true, the existing tenant ID will be ignored and a new report will be created with the tenant's updated data. If it is excluded or false, we will return the tenant's existing report if we have one that corresponds to the external_tenant_id you have provided.
 }
