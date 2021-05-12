@@ -89,9 +89,9 @@ To fetch the report created through the **embedded flow**, make a GET request to
 To fetch the report created through the **pure api flow**, make a GET request to **/api/report/<purchase_token>** with the required authentication.  
 
 Example:  
-``curl -i -H "Authorization: Token <your_token>" --request GET <target_environment>/screen/embedded_flow_request/<purchase_token>``  
+``curl -i -H "Authorization: Token <your_token>" --request GET <target_environment>/screen/embedded_flow_get_report/<purchase_token>``  
 **or**  
-``curl -i -H "Authorization: Token <your_token>" --request GET <target_environment>/api/request/<purchase_token>``  
+``curl -i -H "Authorization: Token <your_token>" --request GET <target_environment>/api/report/<purchase_token>``  
 
 Response:  
 **if in progress:**  
