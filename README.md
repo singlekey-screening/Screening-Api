@@ -118,7 +118,7 @@ This is useful when there is the possibility that you have data on one tenant wh
 If you would like to rerun a tenant's information with updated data within the thirty day window you can pass the value {"update": true} as part of your request. We will run a new credit check with the updated information. This is useful when your initial request contained incorrect information that led to a bad result on the initial report. This will generate a new purchase token, and you will still be able to access the 
   
 # Payments
-You can tie a payment to your account using the by sending your credit card information to **/api/payments**  
+You can tie a payment to your account using the by sending your credit card information to **/screen/payments**  
 
 To add a credit card to your account post your credit card details  
 ``payload = {``  
