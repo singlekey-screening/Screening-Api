@@ -8,7 +8,7 @@ SingleKey offers two easy ways to integrate our screening functionality into you
 
 ### Embedded Flow
 **Use our forms to collect your customer's data.**  
-Your user can request a new screening from inside of your portal. This includes the abliity for your users to use both of our [Screening Flows](#screening-flows). Your server will requests a new screening from our API, which will return a unique link where your users can fill out their information and request a tenant screening. That unique form can be pre-populated with data that you provide in the intial request. After they are finished they will be redirected back you your portal. You will be notified by webhook after the screening is complete and you will be provided a link to the report. Payment can be authorized by your applicaiton or made directly by your user.  
+Your user can request a new screening from inside of your portal. This includes the abliity for your users to use both of our [Screening Flows](#screening-flows). Your server will requests a new screening from our API, which will return a unique link where your users can fill out their information and request a tenant screening. That unique form can be pre-populated with data that you provide in the intial request. After they are finished they will be redirected back to your portal. You will be notified by webhook after the screening is complete and you will be provided a link to the report. Payment can be authorized by your applicaiton or made directly by your user.  
 ### Pure API Access   
 **Provide your user's data directly throught the API**  
 When your user requests a tenant screening, your server will send a request to our API with all required data to initiate a screening. You will be returned a token that will allow you to fetch your report when it is finished. You will be notified by webhook after the screening is complete and you will be provided a link to the report. A payment method must be added to your account via the API payments method do activate this feature.  
@@ -28,7 +28,7 @@ All sandbox requests are made to: <https://sandbox-v1.singlekey.com>
 ### Embedded Flow  
  
 Before making an embedded flow requests we require three pieces of information from you:  
-**redirect_url:** A url to redirect your users back to your portal after they have finished requesting their tenant screening.
+**redirect_url:** A url to redirect your users back to your portal after they have finished requesting their tenant screening.  
 **request_notification_callback_url:** A url for our webhook to notify you that one of your users has made a new request.  
 **complete_notification_callback_url:** A url for our webhook to notify you that one of your users report is complete.  
   
