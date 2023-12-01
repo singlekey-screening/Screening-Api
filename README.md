@@ -1,5 +1,6 @@
 # Screening-Api
-SingleKey Screening Api offers a fast, secure solution for landlords and property managers to screen applicants, providing full Equifax and background screening information in under 5 minutes.  
+SingleKey Screening Api offers a fast, secure solution for landlords and property managers to screen applicants, providing full Equifax or Transunion credit data and background screening information in under 5 minutes.  
+
 For a sample of our report or to learn more about our services, see [singlekey.com](https://singlekey.com), or contact us at **info@singlekey.com** and **1 (877) 978-1404**  
 To get started with credentials for our sandbox environment, contact us at **info@singlekey.com**
 
@@ -8,7 +9,7 @@ SingleKey offers two easy ways to integrate our screening functionality into you
 
 ### Embedded Flow
 **Use our forms to collect your customer's data.**  
-Your user can request a new screening from inside of your portal. This includes the abliity for your users to use both of our [Screening Flows](#screening-flows). Your server will requests a new screening from our API, which will return a unique link where your users can fill out their information and request a tenant screening. That unique form can be pre-populated with data that you provide in the intial request. After they are finished they will be redirected back to your portal. You will be notified by webhook after the screening is complete and you will be provided a link to the report. Payment can be authorized by your applicaiton or made directly by your user.  
+Your user can request a new screening from inside of your portal. This includes the ability for your users to use both of our [Screening Flows](#screening-flows). Your server will requests a new screening from our API, which will return a unique link where your users can fill out their information and request a tenant screening. That unique form can be pre-populated with data that you provide in the initial request. After they are finished they will be redirected back to your portal. You will be notified by webhook after the screening is complete and you will be provided a link to the report. Payment can be authorized by your application or made directly by your user.  
 ### Pure API Access   
 **Provide your user's data directly throught the API**  
 When your user requests a tenant screening, your server will send a request to our API with all required data to initiate a screening. You will be returned a token that will allow you to fetch your report when it is finished. You will be notified by webhook after the screening is complete and you will be provided a link to the report. A payment method must be added to your account via the API payments method do activate this feature.  
@@ -31,6 +32,8 @@ Before making an embedded flow requests we require three pieces of information f
 **redirect_url:** A url to redirect your users back to your portal after they have finished requesting their tenant screening.  
 **request_notification_callback_url:** A url for our webhook to notify you that one of your users has made a new request.  
 **complete_notification_callback_url:** A url for our webhook to notify you that one of your users report is complete.  
+We also can configure an email or text alert to notify you if our request to send a webhook is unsuccessful (does not receive a 200 response)  
+To receive that notification you can provide us with an **alert_email** and  **alert_text**  
   
 Optionally, you can also provide and image of your **branding** so that it can be include on our forms.  
 
@@ -39,6 +42,8 @@ Optionally, you can also provide and image of your **branding** so that it can b
 &nbsp;&nbsp;'*ll_last_name*': string - landlord's last name  
 &nbsp;&nbsp;'*ll_tel*': string - landlord's phone number  
 &nbsp;&nbsp;'*ll_email*': string - landlord's email  
+&nbsp;&nbsp;'*ll_email*': string - landlord's email  
+&nbsp;&nbsp;'*purchase_address*' - the address of the unit the applicant is applying to  
   
 To initiate a screening, make a POST request to **/screen/embedded_flow_request** with the required authentication and information.  
 Example:  
@@ -67,6 +72,7 @@ Response:
 '*ll_last_name*': string - landlord's last name  
 '*ll_tel*': string - landlord's phone number  
 '*ll_email*': string - landlord's email  
+'*purchase_address*' - the address of the unit the applicant is applying to
 '*run_now*': boolean - true to run the report immediately  
 ‘*ten_first_name*’: string - tenant’s first name  
 ‘*ten_last_name*’: string - tenant’s last name
@@ -115,7 +121,7 @@ You can identify your tenants to us by including an external_tenant_id in your r
   
 This is useful when there is the possibility that you have data on one tenant who will be applying to multiple landlords(users) within your system. In this case, after one of your landlord(user) screens a tenant, the recent credit data we have on the tenant will be returned to any of your other landlords(users) who screen that tenant for up to thirty days after the last screening. This prevents you from being charged multiple times for running a credit report on a tenant who's information we have recently run. After 30 days, we consider that report no longer valid, as the tenants credit history may have changed.  
   
-If you would like to rerun a tenant's information with updated data within the thirty day window you can pass the value {"update": true} as part of your request. We will run a new credit check with the updated information. This is useful when your initial request contained incorrect information that led to a bad result on the initial report. This will generate a new purchase token, and you will still be able to access the 
+If you would like to rerun a tenant's information with updated data within the thirty day window you can pass the value {"update": true} as part of your request. We will run a new credit check with the updated information. This is useful when your initial request contained incorrect information that led to a bad result on the initial report. This will generate a new purchase token  
   
 # Payments
 You can tie a payment to your account using the by sending your credit card information to **/screen/payments**  
@@ -157,4 +163,20 @@ Users fill out basic information about the tenant like name, email and phone num
 ### Self Serve  
 If a user has the required information and **the tenant's consent**, they can run the report immediately. Users can upload their consent document and the tenant's id if available, and the report is run upon submission.
 
+# Responses  
+To each request you make to our server, we will respond with a json payload that includes information on the status of your request, or detailed error information if applicable. Most of these responses will include:  
+- your token  
+- your request status  
+- a from url you can use to update the submission  
+- the tenant application link. Even if you are making a pure api request, you can use the tenant form to update your application  
+- any relevant error information  
+  
+**A partial list of responses can be found in this repository at /responses/responses.txt**  
+  
+# Admin Portal  
+When we issue you your credentials we will also give you access to an admin portal that you can use to perform many actions such as:  
+- checking the status of your application  
+- resending invites  
+- identifying errors with a submission  
+  
 
