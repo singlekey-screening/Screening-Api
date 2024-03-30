@@ -36,7 +36,7 @@ Using the embedded flow offers two options:
 Before making an embedded flow requests we require three pieces of information from you:  
 **redirect_url:** A url to redirect your users back to your portal after they have finished requesting their tenant screening.  
 **notification_callback_url:** A url for our webhook to notify you when status changes occur with your request.  
-We also can configure an email or text alert to notify you if our request to send a webhook is unsuccessful (does not receive a 200 response)  
+We also can configure an email or text alert to notify you if our request to send a webhook is unsuccessful (does not receive the expected response status code, usually 200)  
 To receive that notification you can provide us with an **alert_email** and  **alert_text**  
   
 Optionally, you can also provide and image of your **branding** so that it can be include on our forms.  

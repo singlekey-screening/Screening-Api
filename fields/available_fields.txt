@@ -6,6 +6,10 @@
 
   "external_tenant_id": "124EE14", // string - the tenant's unique_id provide BY THE PARTNER REQUESTING THE SCREENING//
 
+  "external_deal_id": "122312", // string - an identifier from your system, or more likely from your CRM to identify the deal or relationship between a landlord and tenant //
+
+  "external_property_id": "122312", // string - an identifier from your system, for the unit or listing being rented out //
+
   "ll_first_name": "Jessica", //string - landlord's first name
 
   "ll_last_name": "Singh", //string - landlord's last name

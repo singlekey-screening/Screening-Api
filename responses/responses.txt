@@ -36,6 +36,8 @@ Response Status Code: 200
     "success": true
 }
 
+-----------Webhook Notifications----------------
+
 
 Example response when landlord has invited the tenant and the tenant hasn't responded (unopened email):
 Method: GET
