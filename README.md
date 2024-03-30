@@ -20,18 +20,22 @@ Requests are authenticated by Token Authentication. You will provide your token 
 
 # Environments  
 All production requests are made to: <https://platform.singlekey.com>  
-All sandbox requests are made to: <https://sandbox-v1.singlekey.com>  
+All sandbox requests are made to: <https://sandbox.singlekey.com>  
 
 # Making A Request    
 
 **A full list of fields which can be submitted can be found in this repository at /fields/available_fields.txt**  
+**Some example payloads can be found in this repository at /example_payloads**  
 
 ### Embedded Flow  
- 
+
+Using the embedded flow offers two options:  
+-Obtain a form to the landlord, who can choose to either invite a tenant to fill out an application via email and text, or (provided they have proof of consent and required information) screen the tenant immediately  
+-Obtain a form to present directly to the tenant. Do do this, include the optional key-value pair {"tenant_form": true} in the json payload  
+   
 Before making an embedded flow requests we require three pieces of information from you:  
 **redirect_url:** A url to redirect your users back to your portal after they have finished requesting their tenant screening.  
-**request_notification_callback_url:** A url for our webhook to notify you that one of your users has made a new request.  
-**complete_notification_callback_url:** A url for our webhook to notify you that one of your users report is complete.  
+**notification_callback_url:** A url for our webhook to notify you when status changes occur with your request.  
 We also can configure an email or text alert to notify you if our request to send a webhook is unsuccessful (does not receive a 200 response)  
 To receive that notification you can provide us with an **alert_email** and  **alert_text**  
   
@@ -41,31 +45,38 @@ Optionally, you can also provide and image of your **branding** so that it can b
 &nbsp;&nbsp;'*ll_first_name*': string - landlord's first name  
 &nbsp;&nbsp;'*ll_last_name*': string - landlord's last name  
 &nbsp;&nbsp;'*ll_tel*': string - landlord's phone number  
-&nbsp;&nbsp;'*ll_email*': string - landlord's email  
-&nbsp;&nbsp;'*ll_email*': string - landlord's email  
+&nbsp;&nbsp;'*ll_email*': string - landlord's email   
 &nbsp;&nbsp;'*purchase_address*' - the address of the unit the applicant is applying to  
+
+To obtain the tenant application form directly include:  
+&nbsp;&nbsp;'*tenant_form*' - true
   
 To initiate a screening, make a POST request to **/screen/embedded_flow_request** with the required authentication and information.  
 Example:  
 ``curl -i -H "Authorization: Token <your_token>" -H "Content-Type: application/json"  --request POST <target_environment>/screen/embedded_flow_request --data '{"ll_first_name":"Example","external_customer_id":<your_id_for_user>, ...<required_data>... }'``  
 
 Response:  
-``{``  
-&nbsp;&nbsp;``  "purchase_token": "434477952f8a46593abf7b133c385c98",``    
-&nbsp;&nbsp;``  "form_url": "http://localhost:8000/screen/request?purchase_token=434477952f8a46593abf7b133c385c98"``  
-``}  ``  
-
+``{``
+&nbsp;&nbsp;``"purchase_token": "0f9a323bac7776a301d4b260c8be4e04",``  
+&nbsp;&nbsp;``"payment_status": "landlord has not submitted",``  
+&nbsp;&nbsp;``"created": "2024-03-30T14:08:53.215066+00:00",``  
+&nbsp;&nbsp;``"form_url": "http://localhost:8000/screen/request?purchase_token=0f9a323bac7776a301d4b260c8be4e04"``  
+``}``  
+  
 ### Pure API Request  
-
+  
 To initiate a pure API screening, make a POST request to **/api/request** with the required authentication and information.  
 Example:  
 ``curl -i -H "Authorization: Token <your_token>" -H "Content-Type: application/json"  --request POST <target_environment>/api/request --data '{"ll_first_name":"Example","external_customer_id":<your_id_for_user>, ...<required_data>... }'``  
 
 Response:  
-``{``  
-&nbsp;&nbsp;``  "purchase_token": "434477952f8a46593abf7b133c385c98",``    
-&nbsp;&nbsp;``  "initiated": true``  
-``}  ``  
+``{``
+&nbsp;&nbsp;``"purchase_token": "e9227009cacde4446f4d508d090fef02",``  
+&nbsp;&nbsp;``"payment_status": "paid",``  
+&nbsp;&nbsp;``"created": "2024-03-30T14:13:03.109200+00:00",``  
+&nbsp;&nbsp;``"initiated": true``  
+``}``  
+  
 
 **Required Json Fields:**  
 '*ll_first_name*': string - landlord's first name  
@@ -81,7 +92,7 @@ Response:
 ‘*ten_dob_day*': integer - tenant’s date of birth day. 1 or 2 digits acceptable  
 ‘*ten_dob_month*’: integer - tenant’s date of birth month. 1 or 2 digits acceptable  
 ‘*ten_dob_year*’: integer - tenant’s date of birth year. 4 digits required  
-‘*ten_sin*’: integer - tenant’s social insurance number. 9 digits required **(Only reqired when screening an applicant who's primary residence is in the US)**  
+‘*ten_sin*’: integer - tenant’s social insurance number. 9 digits required **(Only required when screening an applicant who's primary residence is in the US)**  
 '*ten_address*': string - tenant's current address  
 &nbsp;&nbsp;&nbsp;&nbsp;!format! "street address, city, province two letter abbreviation, country"  
 &nbsp;&nbsp;&nbsp;&nbsp;!This is important!. We use google address search to format all addresses for our automated application process.  
