@@ -35,6 +35,12 @@ A 401 error indicates that you either did not include Authentication credentials
     "detail": "Invalid token."
 }  
 ```  
+or if authentication is missing:  
+```
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
 Please ensure you are including your correct auth_token in the headers for your request: **{"Authorization": "Token <your auth token>"}**  
   
 ### 404  
