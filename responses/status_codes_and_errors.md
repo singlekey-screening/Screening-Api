@@ -26,10 +26,16 @@ There are two types of 500 status codes you may receive:
 - 500 errors ** with no JSON body** and headers that contain **{"Content-Type": "text/html;charset=UTF-8"}**. These are HTML responses that very likely means **your IP address has been blocked by Cloudflare or our AWS WAF**. This is often due to requests coming from a geographic location known for bad actors, although your IP address may be flagged for other reasons.  In this case, please contact us and we will *"allow list"* your server's IP address.  
 - 500 errors **with a JSON body** and headers that contain **{"Content-Type": "application/json"}**. These indicate an internal server error that is handled but is preventing the normal operation of our service. In this case, please contact us and include the JSON response and we will fix the error as quickly as possible.  
   
-All responses that are not 500 errors will be JSON responses and will include the key-value pair indicating weather or not the request was successful such as **{"success": true}** or **{"success": false}**.
+All responses that are not 500 errors will be JSON responses and will include the key-value pair indicating weather or not the request was successful such as **{"success": true}** or **{"success": false}**, with the exception of **401** authorization errors which do not contain that flag.
   
 ### 401  
-A 401 error indicates that you either did not include Authentication credentials in the headers of your request, or your credentials are incorrect. Please ensure you are including your correct auth_token in the headers for your request: **{"Authorization": "Token <your auth token>"}**  
+A 401 error indicates that you either did not include Authentication credentials in the headers of your request, or your credentials are incorrect.  
+```
+{
+    "detail": "Invalid token."
+}  
+```  
+Please ensure you are including your correct auth_token in the headers for your request: **{"Authorization": "Token <your auth token>"}**  
   
 ### 404  
 A 404 response indicate that the resource you are looking for does not exist. This likely means that you are using an incorrect token to retrieve a report.  
